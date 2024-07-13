@@ -20,4 +20,4 @@ cd [your_project_dir]                                             <br />
 git clone git@github.com:Kosstraz/ARISTOTE.git                    <br />
 cd ARISTOTE                                                       <br />
 make                                                              <br />
-[ENJOY_:)]
+ENJOY YOUR CRASHES :)
