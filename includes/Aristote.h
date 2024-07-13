@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:17:19 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:40:33 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:58:34 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 		ALL DEFAULT TESTS
 */
 
+# define WAITING_TIME 2000
+# define EMERGENCY_WAIT 20000
 # define TEST_DEFAULT0 "1 800 200 200" // died without eating
 # define TEST_DEFAULT1 "5 800 200 200" // live
 # define TEST_DEFAULT2 "5 800 200 200 7" // live
@@ -79,6 +81,7 @@ void	freemem(void **ptr2);
 char	*ft_strjoin(const char *s1, const char *s2);
 void	parse(int ac, char **av, int *count, char *default_params);
 void	get_args(char *param, t_args *args);
+int		sd_i(char *str);
 char	**ft_split(const char *s, char sep);
 
 #endif

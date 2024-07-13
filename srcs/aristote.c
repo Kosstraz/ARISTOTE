@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:14:18 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:40:47 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:02:47 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ms(struct timeval tv)
 	return ((tv.tv_sec) * 1000 + (tv.tv_usec) / 1000);
 }
 
-
 // 0 died
 // 1 alive
 char	check_philo_status(int fd, t_args args)
@@ -25,11 +24,13 @@ char	check_philo_status(int fd, t_args args)
 	struct timeval	s;
 	struct timeval	e;
 	char			*gnl;
+	int				waiting_time;
 
+	waiting_time = WAITING_TIME;
 	gettimeofday(&s, NULL);
 	e = s;
 	gnl = get_next_line(fd);
-	while (ms(e) - ms(s) <= 3000 + args.dtime)
+	while (ms(e) - ms(s) <= waiting_time + args.dtime)
 	{
 		gettimeofday(&e, NULL);
 		if (gnl && strstr(gnl, "died"))
@@ -45,22 +46,33 @@ char	check_philo_status(int fd, t_args args)
 			fd = open(TMP_FILE, O_RDONLY, PERM);
 			gnl = get_next_line(fd);
 		}
+		if (!(ms(e) - ms(s) <= WAITING_TIME + args.dtime) &&
+			(args.dtime <= args.etime + args.stime || args.n == 1) &&
+			waiting_time == WAITING_TIME)
+			waiting_time += EMERGENCY_WAIT;								// timeout sinon
 	}
 	return (1);
 }
 
-void	check_test_result(t_args args, int philo_status)
+void	check_test_result(t_args args, int philo_status, char *param)
 {
 	if (philo_status == 0)
 	{
-		if (args.dtime > args.etime + args.stime)
+		if (args.n == 1)
+			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
+		else if (!strcmp("310 200 100", &param[sd_i(param) + 1]) &&
+				 args.n > 2)
+			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
+		else if (args.dtime > args.etime + args.stime)
 			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
 		else
 			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
 	}
 	else
 	{
-		if (args.dtime > args.etime + args.stime)
+		if (args.n == 1)
+			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
+		else if (args.dtime > args.etime + args.stime)
 			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
 		else
 			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
@@ -95,8 +107,9 @@ void	do_tests(int count, char **params)
 			{
 				get_args(params[i], &args);
 				philo_status = check_philo_status(fd, args);
-				check_test_result(args, philo_status);
+				check_test_result(args, philo_status, params[i]);
 				close(fd);
+				remove(TMP_FILE);
 			}
 		}
 	}

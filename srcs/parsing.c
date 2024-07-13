@@ -6,11 +6,22 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 17:02:07 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:17:10 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:02:18 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Aristote.h"
+
+// skip digits without int ptr
+int	sd_i(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+		i++;
+	return (i);
+}
 
 static void	skip_digits(char *str, int *start)
 {
