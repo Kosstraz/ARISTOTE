@@ -6,7 +6,7 @@
 #    By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 16:21:19 by ymanchon          #+#    #+#              #
-#    Updated: 2024/07/13 16:40:23 by ymanchon         ###   ########.fr        #
+#    Updated: 2024/07/13 17:04:54 by ymanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS =	./srcs/ft_split.c \
 		./srcs/freemem.c \
 		./srcs/get_next_line_utils.c \
 		./srcs/get_next_line.c \
+		./srcs/parsing.c \
 		./srcs/aristote.c \
 
 OBJS_DIR =		objs

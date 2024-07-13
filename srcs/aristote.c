@@ -6,18 +6,74 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:14:18 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 16:43:09 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:40:47 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "Aristote.h"
+
+int	ms(struct timeval tv)
+{
+	return ((tv.tv_sec) * 1000 + (tv.tv_usec) / 1000);
+}
+
+
+// 0 died
+// 1 alive
+char	check_philo_status(int fd, t_args args)
+{
+	struct timeval	s;
+	struct timeval	e;
+	char			*gnl;
+
+	gettimeofday(&s, NULL);
+	e = s;
+	gnl = get_next_line(fd);
+	while (ms(e) - ms(s) <= 3000 + args.dtime)
+	{
+		gettimeofday(&e, NULL);
+		if (gnl && strstr(gnl, "died"))
+		{
+			printf("%s", gnl);
+			return (0);
+		}
+		free(gnl);
+		gnl = get_next_line(fd);
+		if (!gnl)
+		{
+			close(fd);
+			fd = open(TMP_FILE, O_RDONLY, PERM);
+			gnl = get_next_line(fd);
+		}
+	}
+	return (1);
+}
+
+void	check_test_result(t_args args, int philo_status)
+{
+	if (philo_status == 0)
+	{
+		if (args.dtime > args.etime + args.stime)
+			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
+		else
+			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
+	}
+	else
+	{
+		if (args.dtime > args.etime + args.stime)
+			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
+		else
+			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
+	}
+}
 
 void	do_tests(int count, char **params)
 {
 	char	*join; // a MUST for PHILO() macro
 	char	**split; // a MUST for PHILO() macro
 	int		philo_processus;
+	t_args	args;
+	int		philo_status;
 	int		fd;
 
 	for (int i = 0 ; params[i] ; i++)
@@ -26,19 +82,20 @@ void	do_tests(int count, char **params)
 		{
 			PRINT_TEST(params[i], i);
 			fd = open(TMP_FILE, O_RDONLY | O_CREAT | O_TRUNC, PERM);
+			write(fd, "", 0);
 			philo_processus = fork();
 			if (!philo_processus)
 			{
-				fd = open(TMP_FILE, O_RDWR | O_TRUNC, PERM);
+				fd = open(TMP_FILE, O_RDWR, PERM);
 				dup2(fd, 1);
 				close(fd);
 				PHILO(params[i]);
 			}
 			else
 			{
-				sleep(3);
-				kill(philo_processus, SIGKILL);
-				printf("\e[32m%s\e[0m\n", get_next_line(fd));
+				get_args(params[i], &args);
+				philo_status = check_philo_status(fd, args);
+				check_test_result(args, philo_status);
 				close(fd);
 			}
 		}
@@ -90,26 +147,6 @@ char	**join_params(int ac, char **av)
 	ret = ft_split(join, '|');
 	free(join);
 	return (ret);
-}
-
-void	parse(int ac, char **av, int *count, char *default_params)
-{
-	int	_atoi;
-
-	_atoi = atoi(av[1]);
-	if (ac == 2)
-	{
-		if (_atoi == 0)
-			*default_params = 0;
-		else
-			*count = _atoi;
-	}
-	else
-	{
-		*default_params = 0;
-		if (_atoi != 0)
-			*count = _atoi;
-	}
 }
 
 int	main(int ac, char **av)

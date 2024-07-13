@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:17:19 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 16:41:04 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:40:33 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # define BOLD "\e[1m"
 # define FORE_BLACK "\e[30m"
+# define FORE_RED "\e[31m"
+# define FORE_GREEN "\e[32m"
 # define BACK_GREEN "\e[42m"
 # define DEFAULT "\e[0m"
 
@@ -60,11 +62,23 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+# include <signal.h>
+# include <sys/time.h>
 # include "get_next_line.h"
+
+typedef struct s_args
+{
+	int	n;
+	int	dtime;
+	int	etime;
+	int	stime;
+}	t_args;
 
 char	*get_next_line(int fd);
 void	freemem(void **ptr2);
 char	*ft_strjoin(const char *s1, const char *s2);
+void	parse(int ac, char **av, int *count, char *default_params);
+void	get_args(char *param, t_args *args);
 char	**ft_split(const char *s, char sep);
 
 #endif
