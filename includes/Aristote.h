@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:17:19 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 18:58:34 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:08:57 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define FORE_RED "\e[31m"
 # define FORE_GREEN "\e[32m"
 # define BACK_GREEN "\e[42m"
+# define BACK_PURPLE "\e[45m"
 # define DEFAULT "\e[0m"
 
 /*
@@ -59,7 +60,7 @@
 					execve("../philo", split, NULL);\
 					freemem((void **)split);\
 					free(join);
-# define PRINT_TEST(args, i) printf("\t\t%sTEST %d --> %s../philo %s%s\n ", BACK_GREEN, i, BOLD, args, DEFAULT)
+# define PRINT_TEST(args, i) printf("\n\t%sTEST %d --> %s../philo %s%s\n", BACK_PURPLE, i, BOLD, args, DEFAULT)
 
 # include <stdio.h>
 # include <fcntl.h>

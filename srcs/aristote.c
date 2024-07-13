@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:14:18 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 19:02:47 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:07:27 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	check_test_result(t_args args, int philo_status, char *param)
 	else
 	{
 		if (args.n == 1)
+			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
+		else if (!strcmp("310 200 100", &param[sd_i(param) + 1]) &&
+				 args.n > 2)
 			printf("%s%sFAILED%s\n", BOLD, FORE_RED, DEFAULT);
 		else if (args.dtime > args.etime + args.stime)
 			printf("%s%sSUCCESS%s\n", BOLD, FORE_GREEN, DEFAULT);
