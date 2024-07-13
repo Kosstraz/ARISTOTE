@@ -6,7 +6,7 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 18:14:18 by ymanchon          #+#    #+#             */
-/*   Updated: 2024/07/13 19:07:27 by ymanchon         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:18:27 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	do_tests(int count, char **params)
 				get_args(params[i], &args);
 				philo_status = check_philo_status(fd, args);
 				check_test_result(args, philo_status, params[i]);
+				kill(philo_processus, SIGKILL);
 				close(fd);
 				remove(TMP_FILE);
 			}
