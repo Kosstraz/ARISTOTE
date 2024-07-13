@@ -4,7 +4,8 @@
 # REPEAT TEST
 ./aristote [count]
 
----# TEST WITH SPECIFIC TESTS (replace '_' by ' ')---
+# TEST WITH SPECIFIC TESTS (replace '_' by ' ')
+PROBLEM <br />
 ---./aristote ["5_800_200_200"] ["4_410_200_200"] ["4_310_200_100"] ...---
 
 # TEST WITH FULL PARAMETERS
