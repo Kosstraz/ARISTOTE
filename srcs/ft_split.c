@@ -94,9 +94,3 @@ char	**ft_split(const char *s, char sep)
 	ret[j] = NULL;
 	return (ret);
 }
-
-/*int main(void)
-{
-	printf("%s\n", ft_split("^^^1^^2a,^^^^3^^^^--h^^^^", '^'));	
-	return (0);
-}*/
