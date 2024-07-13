@@ -5,7 +5,7 @@
 ./aristote [count]
 
 # TEST WITH SPECIFIC TESTS (replace '_' by ' ')
-PROBLEM <br />
+DOESNT WORK                                                                                    <br />
 ---./aristote ["5_800_200_200"] ["4_410_200_200"] ["4_310_200_100"] ...---
 
 # TEST WITH FULL PARAMETERS
@@ -16,8 +16,8 @@ PROBLEM <br />
 
 
 # CONFIGURATION :
-cd [your_project_dir]
-git clone git@github.com:Kosstraz/ARISTOTE.git
-cd ARISTOTE
-make
+cd [your_project_dir]                                             <br />
+git clone git@github.com:Kosstraz/ARISTOTE.git                    <br />
+cd ARISTOTE                                                       <br />
+make                                                              <br />
 [ENJOY_:)]
